@@ -1,29 +1,36 @@
 package com.diarcastro.drupalgenerator
 
 import com.intellij.openapi.ui.DialogWrapper
+import java.awt.FlowLayout
 import javax.swing.JComponent
+import javax.swing.JLabel
 import javax.swing.JTextField
 import javax.swing.JPanel
+import javax.swing.SwingUtilities
+
 
 class CreateFileDialog : DialogWrapper(true) {
-    private var fileNameField: JTextField = JTextField(20)
-    private var contentPane: JPanel = JPanel()
+    private var sdcName: JTextField = JTextField("my-sdc", 20)
+    private var sdcLabel: JLabel = JLabel("SDC Name:")
+    private var contentPane: JPanel = JPanel(FlowLayout(FlowLayout.LEFT))
 
     init {
         init()
         title = "New Drupal SDC"
-        // Manually initialize the contentPane if not using GUI Designer
-//        contentPane = JPanel()
-//        fileNameField = JTextField(20)
 
     }
 
     override fun createCenterPanel(): JComponent? {
-        contentPane.add(fileNameField)
+        contentPane.add(sdcLabel)
+        contentPane.add(sdcName)
+        SwingUtilities.invokeLater {
+            sdcName.selectAll()
+            sdcName.requestFocusInWindow()
+        }
         return contentPane
     }
 
     fun getFileName(): String {
-        return fileNameField.text
+        return sdcName.text
     }
 }
