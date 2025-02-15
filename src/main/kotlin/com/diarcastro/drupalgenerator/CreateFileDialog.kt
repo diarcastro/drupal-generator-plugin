@@ -30,7 +30,10 @@ class CreateFileDialog : DialogWrapper(true) {
         return contentPane
     }
 
-    fun getFileName(): String {
-        return sdcName.text
+    fun getComponentData(): ComponentData {
+        val componentData = ComponentData();
+        componentData.name = sdcName.text
+
+        return componentData
     }
 }

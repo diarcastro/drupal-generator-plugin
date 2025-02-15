@@ -18,16 +18,19 @@ class CreateFilesAction : AnAction() {
 
         val dialog = CreateFileDialog()
         if (dialog.showAndGet()) {
-            val fileName = dialog.getFileName()
-            if (fileName.isNullOrBlank()) {
+            val componentData = dialog.getComponentData()
+            if (!componentData.isValid()) {
                 return
             }
 
             // Perform file creation inside a write-action
             WriteCommandAction.runWriteCommandAction(project) {
                 try {
-                    val newFile = folder.createChildData(this, fileName)
-                    Messages.showInfoMessage(project, "File created: ${newFile.path}", "Success")
+                    val fileName = componentData.fileName()
+                    val sdcFolder = folder.createChildDirectory(this, fileName)
+                    val componentFile = sdcFolder.createChildData(this, "$fileName.yml")
+                    componentFile.setBinaryContent(templateComponent(componentData))
+                    Messages.showInfoMessage(project, "Component $sdcFolder was created!", "Success")
                 } catch (ex: Exception) {
                     Messages.showErrorDialog(project, "Failed to create file: ${ex.message}", "Error")
                 }
