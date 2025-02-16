@@ -18,6 +18,7 @@ class CreateFileDialog : DialogWrapper(true) {
     private var mainPanel: JPanel = JPanel()
     private var sdcName: JTextField = JTextField("my-sdc", 20)
     private var sdcLabel: JLabel = JLabel("SDC Name:")
+    private val statusDropdown = ComboBox(arrayOf("experimental", "stable", "deprecated", "obsolete"))
 
     init {
         init()
@@ -46,7 +47,6 @@ class CreateFileDialog : DialogWrapper(true) {
         val panels = mutableListOf<JPanel>()
 
         val statusLabel = JLabel("Status:")
-        val statusDropdown = ComboBox(arrayOf("experimental", "stable", "deprecated", "obsolete"))
         statusDropdown.selectedItem = "stable"
         val panelStatus = createSection(
             "Component Details",
@@ -75,6 +75,7 @@ class CreateFileDialog : DialogWrapper(true) {
     fun getComponentData(): ComponentData {
         val componentData = ComponentData()
         componentData.name = sdcName.text
+        componentData.status = statusDropdown.selectedItem as String
 
         return componentData
     }
