@@ -15,9 +15,8 @@ import javax.swing.JTextField
 import javax.swing.JPanel
 import javax.swing.SwingUtilities
 import javax.swing.tree.TreePath
-import kotlin.reflect.full.memberProperties
-import kotlin.reflect.jvm.reflect
-
+import javax.swing.event.DocumentEvent
+import javax.swing.event.DocumentListener
 
 class CreateFileDialog : DialogWrapper(true) {
     private var mainPanel: JPanel = JPanel()
@@ -92,6 +91,7 @@ class CreateFileDialog : DialogWrapper(true) {
             }
         }
         tree.expandPath(TreePath(srcFolder.path))
+        tree.isRootVisible = true
         val scrollPanel = JBScrollPane(tree)
         val filesPanel = createSection("Files to generate")
         filesPanel.add(scrollPanel, BorderLayout.CENTER)
@@ -102,6 +102,34 @@ class CreateFileDialog : DialogWrapper(true) {
             sdcName.requestFocusInWindow()
         }
         panels.forEach({ mainPanel.add(it, BorderLayout.NORTH) })
+
+        sdcName.document.addDocumentListener(object : DocumentListener {
+            fun updateNodesLabels() {
+                if (sdcName.text.isEmpty()) {
+                    return
+                }
+                val componentName = toKebebCase(sdcName.text)
+                rootNode.userObject = componentName
+                nodeSass.userObject = "$componentName.scss"
+                nodeComponent.userObject = "$componentName.component.yml"
+                nodeCss .userObject = "$componentName.css"
+                nodeJs.userObject = "$componentName.js"
+                nodeStories.userObject = "$componentName.stories.twig"
+                nodeTwig.userObject = "$componentName.twig"
+
+                tree.updateUI()
+            }
+
+            override fun insertUpdate(e: DocumentEvent?) {
+                updateNodesLabels();
+            }
+
+            override fun removeUpdate(e: DocumentEvent?) {
+                updateNodesLabels();
+            }
+
+            override fun changedUpdate(e: DocumentEvent?) {}
+        })
 
         return mainPanel
     }
@@ -141,6 +169,6 @@ class CreateFileDialog : DialogWrapper(true) {
     }
 }
 
-class TreeNodeWithID(val label: String, val id: String) : CheckedTreeNode(label)  {
+class TreeNodeWithID(var label: String, val id: String) : CheckedTreeNode(label)  {
     override fun toString(): String = label;
 }
