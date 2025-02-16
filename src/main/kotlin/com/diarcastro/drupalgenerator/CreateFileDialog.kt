@@ -2,10 +2,10 @@ package com.diarcastro.drupalgenerator
 
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.ui.ComboBox
-import com.intellij.ui.treeStructure.Tree
+import com.intellij.ui.CheckboxTree
+import com.intellij.ui.CheckedTreeNode
 import com.intellij.ui.components.JBScrollPane
 import java.awt.BorderLayout
-import java.awt.Dimension
 import java.awt.FlowLayout
 import java.awt.Font
 import javax.swing.BoxLayout
@@ -14,7 +14,9 @@ import javax.swing.JLabel
 import javax.swing.JTextField
 import javax.swing.JPanel
 import javax.swing.SwingUtilities
-import javax.swing.tree.DefaultMutableTreeNode
+import javax.swing.tree.TreePath
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.jvm.reflect
 
 
 class CreateFileDialog : DialogWrapper(true) {
@@ -22,8 +24,9 @@ class CreateFileDialog : DialogWrapper(true) {
     private var sdcName: JTextField = JTextField("my-sdc", 20)
     private var sdcLabel: JLabel = JLabel("SDC Name:")
     private val statusDropdown = ComboBox(arrayOf("experimental", "stable", "deprecated", "obsolete"))
+    private lateinit var tree: CheckboxTree;
 
-    init {
+        init {
         init()
         title = "New Drupal SDC"
     }
@@ -45,7 +48,6 @@ class CreateFileDialog : DialogWrapper(true) {
 
     override fun createCenterPanel(): JComponent {
         mainPanel.layout = BoxLayout(mainPanel, BoxLayout.Y_AXIS)
-        mainPanel.minimumSize = Dimension(450, 300)
 
         val panels = mutableListOf<JPanel>()
 
@@ -66,18 +68,30 @@ class CreateFileDialog : DialogWrapper(true) {
         panels.add(panelComponent)
 
         /* File tree */
-        val rootNode = DefaultMutableTreeNode("my-sdc")
-        val srcFolder = DefaultMutableTreeNode("src");
-        srcFolder.add(DefaultMutableTreeNode("Component.scss"))
-        rootNode.add(srcFolder)
-        rootNode.add(DefaultMutableTreeNode("src/Component.component.yml"))
-        rootNode.add(DefaultMutableTreeNode("Component.component.yml"))
-        rootNode.add(DefaultMutableTreeNode("Component.css"))
-        rootNode.add(DefaultMutableTreeNode("Component.js"))
-        rootNode.add(DefaultMutableTreeNode("Component.stories.twig"))
-        rootNode.add(DefaultMutableTreeNode("Component.twig"))
+        val rootNode = TreeNodeWithID("my-sdc", "root")
+        val srcFolder = TreeNodeWithID("src", "src")
+        val nodeSass = TreeNodeWithID("my-sdc.scss", "scss")
 
-        val tree = Tree(rootNode)
+        srcFolder.add(nodeSass)
+        val nodeComponent = TreeNodeWithID("my-sdc.component.yml", "yml")
+        val nodeCss = TreeNodeWithID("my-sdc.css", "css")
+        val nodeJs = TreeNodeWithID("my-sdc.js", "js")
+        val nodeStories = TreeNodeWithID("my-sdc.stories.twig", "story")
+        val nodeTwig = TreeNodeWithID("my-sdc.twig", "twig")
+        rootNode.add(srcFolder)
+        rootNode.add(nodeComponent)
+        rootNode.add(nodeCss)
+        rootNode.add(nodeJs)
+        rootNode.add(nodeStories)
+        rootNode.add(nodeTwig)
+
+        // Create the CheckboxTree
+        tree = object : CheckboxTree(CheckboxTreeRenderer(), rootNode) {
+            override fun getCellRenderer(): CheckboxTreeRenderer {
+                return CheckboxTreeRenderer()
+            }
+        }
+        tree.expandPath(TreePath(srcFolder.path))
         val scrollPanel = JBScrollPane(tree)
         val filesPanel = createSection("Files to generate")
         filesPanel.add(scrollPanel, BorderLayout.CENTER)
@@ -96,7 +110,37 @@ class CreateFileDialog : DialogWrapper(true) {
         val componentData = ComponentData()
         componentData.name = sdcName.text
         componentData.status = statusDropdown.selectedItem as String
+        val checkedItems = getCheckedItems(tree)
+        componentData.filesToGenerated.yml = checkedItems.contains("yml")
+        componentData.filesToGenerated.scss = checkedItems.contains("scss")
+        componentData.filesToGenerated.css = checkedItems.contains("css")
+        componentData.filesToGenerated.story = checkedItems.contains("story")
+        componentData.filesToGenerated.js = checkedItems.contains("js")
+        componentData.filesToGenerated.twig = checkedItems.contains("twig")
 
         return componentData
     }
+
+    private fun getCheckedItems(tree: CheckboxTree): List<String> {
+        val checkedNodes = mutableListOf<String>()
+        val root = tree.model.root as TreeNodeWithID
+
+        fun collectChecked(node: TreeNodeWithID) {
+            if (node.isChecked) {
+                checkedNodes.add(node.id)
+            }
+
+            for (i in 0 until node.childCount) {
+                collectChecked(node.getChildAt(i) as TreeNodeWithID)
+            }
+        }
+
+        collectChecked(root)
+
+        return checkedNodes
+    }
+}
+
+class TreeNodeWithID(val label: String, val id: String) : CheckedTreeNode(label)  {
+    override fun toString(): String = label;
 }
