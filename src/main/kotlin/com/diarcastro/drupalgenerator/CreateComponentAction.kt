@@ -26,7 +26,7 @@ class CreateComponentAction : AnAction() {
             }
 
             val fileName = componentData.fileName()
-            val possiblePath = "${folder.path}${File.separator}$fileName";
+            val possiblePath = "${folder.path}${File.separator}$fileName"
             if (File(possiblePath).exists()) {
                 Messages.showErrorDialog(project, "The component $fileName exist already!", "Error")
                 return
