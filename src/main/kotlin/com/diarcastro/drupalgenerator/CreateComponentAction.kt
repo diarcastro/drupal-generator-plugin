@@ -42,11 +42,13 @@ class CreateComponentAction : AnAction() {
                     val componentScssFile = srcFolder.createChildData(this, "$fileName.scss")
                     val componentCssFile = sdcFolder.createChildData(this, "$fileName.css")
                     val componentJsFile = sdcFolder.createChildData(this, "$fileName.js")
+                    val componentStoriesFile = sdcFolder.createChildData(this, "$fileName.stories.twig")
                     componentFile.setBinaryContent(templateComponent(componentData))
                     componentTwigFile.setBinaryContent(templateTwig(componentData))
                     componentScssFile.setBinaryContent(templateScss(componentData))
                     componentCssFile.setBinaryContent(templateScss(componentData))
                     componentJsFile.setBinaryContent(templateJs(componentData))
+                    componentStoriesFile.setBinaryContent(templateStories(componentData, "parent"))
                 } catch (ex: Exception) {
                     Messages.showErrorDialog(project, "Failed to create file: ${ex.message}", "Error")
                 }

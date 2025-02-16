@@ -81,3 +81,39 @@ fun templateJs(componentData: ComponentData): ByteArray {
 })(Drupal, once);
 """.toByteArray()
 }
+
+fun templateStories(componentData: ComponentData, resourceName: String): ByteArray {
+    val componentTitle = componentData.toTitle()
+    val component = componentData.fileName()
+    val componentCamelCase = componentData.variableName()
+
+    return """{#
+# Storybook stories for $componentTitle
+# More documentation on https://www.drupal.org/project/storybook
+#}
+
+{% stories $componentCamelCase with {
+  title: "$componentTitle",
+  args: {},
+} %}
+
+  {% story default with {
+    name: "Default",
+    args: {
+        text: "Hello, World!",
+    },
+    params: {},
+  } %}
+
+    {{ include("$resourceName:$component", { text }) }}
+    {# Example using embed
+      {% embed("$resourceName:$component" with { text }) %}
+       {# blocks/slots here #}
+      {% endembed %}
+    #}
+
+  {% endstory %}
+   
+{% endstories %}
+""".toByteArray()
+}
