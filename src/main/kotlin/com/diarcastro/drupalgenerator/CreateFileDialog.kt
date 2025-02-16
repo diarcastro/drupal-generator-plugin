@@ -20,7 +20,7 @@ class CreateFileDialog : DialogWrapper(true) {
 
     }
 
-    override fun createCenterPanel(): JComponent? {
+    override fun createCenterPanel(): JComponent {
         contentPane.add(sdcLabel)
         contentPane.add(sdcName)
         SwingUtilities.invokeLater {
@@ -31,7 +31,7 @@ class CreateFileDialog : DialogWrapper(true) {
     }
 
     fun getComponentData(): ComponentData {
-        val componentData = ComponentData();
+        val componentData = ComponentData()
         componentData.name = sdcName.text
 
         return componentData

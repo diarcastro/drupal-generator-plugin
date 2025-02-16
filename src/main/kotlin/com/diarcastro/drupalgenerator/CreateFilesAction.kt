@@ -5,6 +5,8 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.ui.Messages
+import javax.swing.JOptionPane
+
 
 class CreateFilesAction : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
@@ -28,9 +30,13 @@ class CreateFilesAction : AnAction() {
                 try {
                     val fileName = componentData.fileName()
                     val sdcFolder = folder.createChildDirectory(this, fileName)
-                    val componentFile = sdcFolder.createChildData(this, "$fileName.yml")
+                    val componentFile = sdcFolder.createChildData(this, "$fileName.component.yml")
+                    val componentTwigFile = sdcFolder.createChildData(this, "$fileName.twig")
                     componentFile.setBinaryContent(templateComponent(componentData))
-                    Messages.showInfoMessage(project, "Component $sdcFolder was created!", "Success")
+                    componentTwigFile.setBinaryContent(templateTwig(componentData))
+
+                    val message = "<html>The component <b>$fileName</b> was created!</html>"
+                    JOptionPane.showMessageDialog(null, message, "Information", JOptionPane.INFORMATION_MESSAGE)
                 } catch (ex: Exception) {
                     Messages.showErrorDialog(project, "Failed to create file: ${ex.message}", "Error")
                 }
