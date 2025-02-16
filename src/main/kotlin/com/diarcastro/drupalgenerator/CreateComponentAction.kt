@@ -5,6 +5,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.ui.Messages
+import java.io.File
 
 
 class CreateComponentAction : AnAction() {
@@ -24,10 +25,16 @@ class CreateComponentAction : AnAction() {
                 return
             }
 
+            val fileName = componentData.fileName()
+            val possiblePath = "${folder.path}${File.separator}$fileName";
+            if (File(possiblePath).exists()) {
+                Messages.showErrorDialog(project, "The component $fileName exist already!", "Error")
+                return
+            }
+
             // Perform file creation inside a write-action
             WriteCommandAction.runWriteCommandAction(project) {
                 try {
-                    val fileName = componentData.fileName()
                     val sdcFolder = folder.createChildDirectory(this, fileName)
                     val componentFile = sdcFolder.createChildData(this, "$fileName.component.yml")
                     val componentTwigFile = sdcFolder.createChildData(this, "$fileName.twig")
