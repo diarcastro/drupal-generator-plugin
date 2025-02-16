@@ -13,6 +13,10 @@ class ComponentData {
         return toKebebCase(this.name)
     }
 
+    fun variableName(): String {
+        return toCamelCase(this.name)
+    }
+
     fun isValid(): Boolean {
         return this.name.isNotBlank()
     }

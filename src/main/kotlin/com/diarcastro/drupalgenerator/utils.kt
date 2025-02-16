@@ -11,6 +11,15 @@ fun toKebebCase(input: String): String {
         .lowercase()
 }
 
+fun toCamelCase(text: String): String {
+    return text.split('_', ' ', '-')
+        .mapIndexed { index, word ->
+            if (index == 0) word.lowercase()
+            else word.lowercase().replaceFirstChar { it.uppercase() }
+        }
+        .joinToString("")
+}
+
 fun toTitleCase(input: String): String {
     return input
         .replace(Regex("([a-z])([A-Z])"), "$1 $2") // Convert camelCase to Title Case

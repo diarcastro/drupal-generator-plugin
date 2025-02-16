@@ -36,10 +36,17 @@ class CreateComponentAction : AnAction() {
             WriteCommandAction.runWriteCommandAction(project) {
                 try {
                     val sdcFolder = folder.createChildDirectory(this, fileName)
+                    val srcFolder = sdcFolder.createChildDirectory(this, "src")
                     val componentFile = sdcFolder.createChildData(this, "$fileName.component.yml")
                     val componentTwigFile = sdcFolder.createChildData(this, "$fileName.twig")
+                    val componentScssFile = srcFolder.createChildData(this, "$fileName.scss")
+                    val componentCssFile = sdcFolder.createChildData(this, "$fileName.css")
+                    val componentJsFile = sdcFolder.createChildData(this, "$fileName.js")
                     componentFile.setBinaryContent(templateComponent(componentData))
                     componentTwigFile.setBinaryContent(templateTwig(componentData))
+                    componentScssFile.setBinaryContent(templateScss(componentData))
+                    componentCssFile.setBinaryContent(templateScss(componentData))
+                    componentJsFile.setBinaryContent(templateJs(componentData))
                 } catch (ex: Exception) {
                     Messages.showErrorDialog(project, "Failed to create file: ${ex.message}", "Error")
                 }

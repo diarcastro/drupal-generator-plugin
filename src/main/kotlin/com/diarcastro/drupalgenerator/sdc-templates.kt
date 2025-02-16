@@ -1,6 +1,6 @@
 package com.diarcastro.drupalgenerator
 
-fun templateComponent(componentData: ComponentData) : ByteArray {
+fun templateComponent(componentData: ComponentData): ByteArray {
     val schema = componentData.schema
     val componentTitle = componentData.toTitle()
     val componentStatus = componentData.status
@@ -30,7 +30,7 @@ props:
 """.toByteArray()
 }
 
-fun templateTwig(componentData: ComponentData) : ByteArray {
+fun templateTwig(componentData: ComponentData): ByteArray {
     val componentTitle = componentData.toTitle()
     val component = componentData.fileName()
 
@@ -44,5 +44,40 @@ fun templateTwig(componentData: ComponentData) : ByteArray {
   <h2>{{ title }}</h2>
   {# {{ body }} #}
 </article>
+""".toByteArray()
+}
+
+fun templateScss(componentData: ComponentData): ByteArray {
+    val componentTitle = componentData.toTitle()
+    val component = componentData.fileName()
+
+    return """/* $componentTitle Component */
+
+.$component {
+  // Write some CSS magic here
+}
+""".toByteArray()
+}
+
+fun templateJs(componentData: ComponentData): ByteArray {
+    val componentTitle = componentData.toTitle()
+    val component = componentData.fileName()
+    val behaviorName = componentData.variableName()
+
+    return """/**
+* $componentTitle Component
+**/
+
+((Drupal, once) => {
+  Drupal.behaviors.$behaviorName = {
+    attach (context/*, settings*/) {
+      // Write some JS magic here
+      once('once-$component', '.$component', context)
+        .forEach((componentItem) => {
+        });
+    },
+    detach (/* context, settings */) {},
+  };
+})(Drupal, once);
 """.toByteArray()
 }
