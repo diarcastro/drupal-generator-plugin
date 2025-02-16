@@ -2,6 +2,8 @@ package com.diarcastro.drupalgenerator
 
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.ui.ComboBox
+import com.intellij.ui.treeStructure.Tree
+import com.intellij.ui.components.JBScrollPane
 import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.FlowLayout
@@ -12,6 +14,7 @@ import javax.swing.JLabel
 import javax.swing.JTextField
 import javax.swing.JPanel
 import javax.swing.SwingUtilities
+import javax.swing.tree.DefaultMutableTreeNode
 
 
 class CreateFileDialog : DialogWrapper(true) {
@@ -62,6 +65,23 @@ class CreateFileDialog : DialogWrapper(true) {
         )
         panels.add(panelComponent)
 
+        /* File tree */
+        val rootNode = DefaultMutableTreeNode("my-sdc")
+        val srcFolder = DefaultMutableTreeNode("src");
+        srcFolder.add(DefaultMutableTreeNode("Component.scss"))
+        rootNode.add(srcFolder)
+        rootNode.add(DefaultMutableTreeNode("src/Component.component.yml"))
+        rootNode.add(DefaultMutableTreeNode("Component.component.yml"))
+        rootNode.add(DefaultMutableTreeNode("Component.css"))
+        rootNode.add(DefaultMutableTreeNode("Component.js"))
+        rootNode.add(DefaultMutableTreeNode("Component.stories.twig"))
+        rootNode.add(DefaultMutableTreeNode("Component.twig"))
+
+        val tree = Tree(rootNode)
+        val scrollPanel = JBScrollPane(tree)
+        val filesPanel = createSection("Files to generate")
+        filesPanel.add(scrollPanel, BorderLayout.CENTER)
+        panels.add(filesPanel)
 
         SwingUtilities.invokeLater {
             sdcName.selectAll()
