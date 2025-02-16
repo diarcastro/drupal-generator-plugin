@@ -2,6 +2,7 @@
 <idea-plugin>
     <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
     <id>com.diarcastro.drupalgenerator</id>
+    <version>1.0.0</version>
 
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
@@ -14,7 +15,7 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-    Drupal Single Directory Component generator
+    Drupal Generator
   ]]></description>
 
     <!-- Product and plugin compatibility requirements.
@@ -28,12 +29,13 @@
     </extensions>
     <actions>
         <action
-                id="com.diarcastro.drupalgenerator.CreateFilesAction"
-                class="com.diarcastro.drupalgenerator.CreateFilesAction"
-                text="New Drupal SDC"
-                description="Create a new file in the selected folder"
+            id="CreateFilesAction"
+            class="com.diarcastro.drupalgenerator.CreateComponentAction"
+            text="Drupal SDC"
+            description="Create a new Single Directory Component"
+            icon="icons/sdc.png"
         >
-            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+            <add-to-group group-id="NewGroup" anchor="last"/>
         </action>
     </actions>
 </idea-plugin>
