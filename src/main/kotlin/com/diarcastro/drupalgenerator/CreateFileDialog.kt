@@ -24,7 +24,7 @@ class CreateFileDialog : DialogWrapper(true) {
     private var sdcName: JTextField = JTextField("my-sdc", 20)
     private var sdcLabel: JLabel = JLabel("SDC Name:")
     private val statusDropdown = ComboBox(arrayOf("experimental", "stable", "deprecated", "obsolete"))
-    private lateinit var tree: CheckboxTree;
+    private lateinit var tree: CheckboxTree
 
     init {
         init()
@@ -128,11 +128,11 @@ class CreateFileDialog : DialogWrapper(true) {
             }
 
             override fun insertUpdate(e: DocumentEvent?) {
-                updateNodesLabels();
+                updateNodesLabels()
             }
 
             override fun removeUpdate(e: DocumentEvent?) {
-                updateNodesLabels();
+                updateNodesLabels()
             }
 
             override fun changedUpdate(e: DocumentEvent?) {}
@@ -177,5 +177,5 @@ class CreateFileDialog : DialogWrapper(true) {
 }
 
 class TreeNodeWithID(var label: String, val id: String) : CheckedTreeNode(label)  {
-    override fun toString(): String = label;
+    override fun toString(): String = label
 }

@@ -24,10 +24,10 @@ class ComponentData {
 }
 
 class ComponentDataFiles {
-    var yml = true;
-    var scss = true;
-    var css = true;
-    var js = true;
-    var story = true;
-    var twig = true;
+    var yml = true
+    var scss = true
+    var css = true
+    var js = true
+    var story = true
+    var twig = true
 }

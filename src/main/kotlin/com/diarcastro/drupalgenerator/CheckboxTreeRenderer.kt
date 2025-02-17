@@ -19,7 +19,7 @@ class CheckboxTreeRenderer : CheckboxTree.CheckboxTreeCellRenderer() {
     ) {
         if (value is CheckedTreeNode) {
             val text = value.userObject.toString()
-            val icon: Icon;
+            val icon: Icon
             icon = if (leaf) {
                 AppIcons.FILE_CODE
             } else {
