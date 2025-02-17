@@ -59,7 +59,7 @@ class CreateComponentAction : AnAction() {
 
                     if (componentData.filesToGenerated.story) {
                         val componentStoriesFile = sdcFolder.createChildData(this, "$fileName.stories.twig")
-                        componentStoriesFile.setBinaryContent(templateStories(componentData, "parent"))
+                        componentStoriesFile.setBinaryContent(templateStories(componentData, folder.parent.name))
                     }
 
                     if (componentData.filesToGenerated.js) {
