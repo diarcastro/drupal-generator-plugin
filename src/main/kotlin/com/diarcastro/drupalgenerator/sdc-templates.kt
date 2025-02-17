@@ -108,7 +108,9 @@ fun templateStories(componentData: ComponentData, resourceName: String): ByteArr
     {{ include("$resourceName:$component", { text }) }}
     {# Example using embed
       {% embed("$resourceName:$component" with { text }) %}
-       {# blocks/slots here #}
+        {% block body %}
+          <p>Hello Text</p>
+        {% endblock %}
       {% endembed %}
     #}
 
