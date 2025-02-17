@@ -15,7 +15,7 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-    <p>Component to generate Drupal components (SDC)</p>
+    <p>Plugin to generate the folder structure and templates for Single Directory Components and Modules (soon)</p>
     <p>If you like the plugin, please rate it on the marketplace and why not <a href="buymeacoffee.com/diarcastro">Buy me a coffee</a></p>
 
     https://www.buymeacoffee.com/diarcastro
@@ -24,8 +24,9 @@
         <li>
             ☑ Generate a new single directory component
             <ul>
-                <li>☐ Add UI to add custom fields</li>
-                <li>☐ Add UI to add custom slots</li>
+              <li>☑ SDC Generator</li>
+              <li>☐ Custom UI to add fields</li>
+              <li>☐ Custom UI to add slots</li>
             </ul>
         </li>
 
