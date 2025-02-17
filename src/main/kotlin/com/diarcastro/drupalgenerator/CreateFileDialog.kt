@@ -8,6 +8,7 @@ import com.intellij.ui.components.JBScrollPane
 import java.awt.BorderLayout
 import java.awt.FlowLayout
 import java.awt.Font
+import javax.swing.Action
 import javax.swing.BoxLayout
 import javax.swing.JComponent
 import javax.swing.JLabel
@@ -25,9 +26,15 @@ class CreateFileDialog : DialogWrapper(true) {
     private val statusDropdown = ComboBox(arrayOf("experimental", "stable", "deprecated", "obsolete"))
     private lateinit var tree: CheckboxTree;
 
-        init {
+    init {
         init()
         title = "New Drupal SDC"
+    }
+
+    override fun getOKAction(): Action {
+        val okAction = super.getOKAction()
+        okAction.putValue(Action.NAME, "Create Component")
+        return okAction
     }
 
     private fun createSection(title: String = "", vararg components: JComponent): JPanel {

@@ -35,7 +35,7 @@
             description="Create a new single directory component"
             icon="icons/sdc.png"
         >
-            <add-to-group group-id="NewGroup" anchor="first"/>
+            <add-to-group group-id="NewGroup" anchor="last"/>
         </action>
     </actions>
 </idea-plugin>
