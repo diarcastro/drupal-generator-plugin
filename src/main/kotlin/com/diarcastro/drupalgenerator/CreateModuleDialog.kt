@@ -80,6 +80,13 @@ class CreateModuleDialog : DialogWrapper(true) {
         val nodeServices = TreeNodeWithID("my_module.services.yml", "services")
         val nodeReadme = TreeNodeWithID("README.md", "readme")
 
+        // Disable by default some files
+        nodeInstall.isChecked = false;
+        nodeLinks.isChecked = false;
+        nodePermissions.isChecked = false;
+        nodeRouting.isChecked = false;
+        nodeServices.isChecked = false;
+
         rootNode.add(nodeInfo)
         rootNode.add(nodeInstall)
         rootNode.add(nodeLinks)
