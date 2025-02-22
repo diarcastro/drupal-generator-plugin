@@ -16,6 +16,7 @@ class ModuleData {
     var name = ""
     var packageName = "Development"
     var versions = "^8 || ^9 || ^10"
+    var description = "My module description"
     var filesToGenerate = listOf<String>()
 
     fun toTitle(): String {
@@ -36,13 +37,14 @@ class ModuleData {
 
     fun getDataObject(): Map<String, String> {
         return mapOf(
-            "title" to this.toTitle(),
-            "package" to this.packageName,
-            "versions" to this.versions,
-            "titleKebabCase" to this.fileName(),
-            "titleCamelCase" to this.variableName(),
-            "titleSnakeCase" to toSnakeCase(this.name),
-            "titlePascalCase" to toPascalCase(this.name),
+            "title" to toTitle(),
+            "description" to description,
+            "package" to packageName,
+            "versions" to versions,
+            "titleKebabCase" to fileName(),
+            "titleCamelCase" to variableName(),
+            "titleSnakeCase" to toSnakeCase(name),
+            "titlePascalCase" to toPascalCase(name),
         )
     }
 }

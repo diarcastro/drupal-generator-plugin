@@ -3,6 +3,6 @@
 
 name: {{title}}
 type: module
-description: '{{title}} for Drupal'
+description: '{{description}}'
 package: {{package}}
 core_version_requirement: {{versions}}
