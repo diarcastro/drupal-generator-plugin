@@ -1,0 +1,8 @@
+my_custom_library:
+  js:
+    js/my_custom_library.js: {}
+  css:
+    component:
+      css/my_custom_library.css: { }
+  dependencies:
+    - core/once

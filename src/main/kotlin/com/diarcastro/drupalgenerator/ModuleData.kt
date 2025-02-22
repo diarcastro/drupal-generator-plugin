@@ -4,6 +4,7 @@ const val TEMPLATE_MODULE_PATH = "templates/module"
 val moduleFiles = mapOf(
     "info" to "$TEMPLATE_MODULE_PATH/module.info.yml",
     "install" to "$TEMPLATE_MODULE_PATH/module.install",
+    "libraries" to "$TEMPLATE_MODULE_PATH/module.libraries.yml",
     "links" to "$TEMPLATE_MODULE_PATH/module.links.menu.yml",
     "module" to "$TEMPLATE_MODULE_PATH/module.module",
     "permissions" to "$TEMPLATE_MODULE_PATH/module.permissions.yml",

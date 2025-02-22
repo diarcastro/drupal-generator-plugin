@@ -39,6 +39,7 @@ class CreateModuleAction : AnAction() {
                     val filesToGenerate = mapOf(
                         "info" to "$fileName.info.yml",
                         "install" to "$fileName.install",
+                        "libraries" to "$fileName.libraries.yml",
                         "links" to "$fileName.links.menu.yml",
                         "module" to "$fileName.module",
                         "permissions" to "$fileName.permissions.yml",

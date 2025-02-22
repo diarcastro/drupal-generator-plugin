@@ -73,6 +73,7 @@ class CreateModuleDialog : DialogWrapper(true) {
         val rootNode = TreeNodeWithID("my_module", "root")
         val nodeInfo = TreeNodeWithID("my_module.info.yml", "info")
         val nodeInstall = TreeNodeWithID("my_module.install", "install")
+        val nodeLibraries = TreeNodeWithID("my_module.libraries.yml", "libraries")
         val nodeLinks = TreeNodeWithID("my_module.links.menu", "links")
         val nodeModule = TreeNodeWithID("my_module.module", "module")
         val nodePermissions = TreeNodeWithID("my_module.permissions.yml", "permissions")
@@ -89,6 +90,7 @@ class CreateModuleDialog : DialogWrapper(true) {
 
         rootNode.add(nodeInfo)
         rootNode.add(nodeInstall)
+        rootNode.add(nodeLibraries)
         rootNode.add(nodeLinks)
         rootNode.add(nodeModule)
         rootNode.add(nodePermissions)
@@ -123,6 +125,7 @@ class CreateModuleDialog : DialogWrapper(true) {
                 rootNode.userObject = resourceName
                 nodeInfo.userObject = "$resourceName.info.yml"
                 nodeInstall.userObject = "$resourceName.install"
+                nodeLibraries.userObject = "$resourceName.libraries.yml"
                 nodeLinks.userObject = "$resourceName.links.menu"
                 nodeModule.userObject = "$resourceName.module"
                 nodePermissions.userObject = "$resourceName.permissions.yml"
