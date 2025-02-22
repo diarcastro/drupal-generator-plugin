@@ -5,6 +5,7 @@ import com.intellij.openapi.ui.ComboBox
 import com.intellij.ui.CheckboxTree
 import com.intellij.ui.components.JBScrollPane
 import java.awt.BorderLayout
+import java.awt.Dimension
 import java.awt.FlowLayout
 import java.awt.Font
 import javax.swing.Action
@@ -21,7 +22,6 @@ import javax.swing.event.DocumentListener
 class CreateFileDialog : DialogWrapper(true) {
     private var mainPanel: JPanel = JPanel()
     private var sdcName: JTextField = JTextField("my-sdc", 20)
-    private var sdcLabel: JLabel = JLabel("SDC Name:")
     private val statusDropdown = ComboBox(arrayOf("experimental", "stable", "deprecated", "obsolete"))
     private lateinit var tree: CheckboxTree
 
@@ -53,10 +53,14 @@ class CreateFileDialog : DialogWrapper(true) {
 
     override fun createCenterPanel(): JComponent {
         mainPanel.layout = BoxLayout(mainPanel, BoxLayout.Y_AXIS)
+        val labelDimension = Dimension(75, 30)
+        val sdcLabel: JLabel = JLabel("SDC Name:")
+        sdcLabel.preferredSize = labelDimension
 
         val panels = mutableListOf<JPanel>()
 
         val statusLabel = JLabel("Status:")
+        statusLabel.preferredSize = labelDimension
         statusDropdown.selectedItem = "stable"
         val panelStatus = createSection(
             "Component Details",

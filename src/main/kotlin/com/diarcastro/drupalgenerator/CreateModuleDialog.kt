@@ -4,6 +4,7 @@ import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.CheckboxTree
 import com.intellij.ui.components.JBScrollPane
 import java.awt.BorderLayout
+import java.awt.Dimension
 import java.awt.FlowLayout
 import java.awt.Font
 import javax.swing.Action
@@ -50,10 +51,15 @@ class CreateModuleDialog : DialogWrapper(true) {
     }
 
     override fun createCenterPanel(): JComponent {
+        val labelDimension = Dimension(75, 30)
         mainPanel.layout = BoxLayout(mainPanel, BoxLayout.Y_AXIS)
-        val nameLabel = JLabel("Module name:")
+        val nameLabel = JLabel("Name:")
+        // set the nameLabel width to the same as the description label
+        nameLabel.preferredSize = labelDimension
         val packageLabel = JLabel("Package:")
-        val descriptionLabel = JLabel("Module description:")
+        packageLabel.preferredSize = labelDimension
+        val descriptionLabel = JLabel("Description:")
+        descriptionLabel.preferredSize = labelDimension
 
         val panels = mutableListOf<JPanel>()
 
