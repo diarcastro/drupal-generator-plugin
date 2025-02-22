@@ -15,7 +15,7 @@ val moduleFiles = mapOf(
 
 class ModuleData {
     var name = ""
-    var packageName = "Development"
+    var packageName = "Custom"
     var versions = "^8 || ^9 || ^10"
     var description = "My module description"
     var filesToGenerate = listOf<String>()

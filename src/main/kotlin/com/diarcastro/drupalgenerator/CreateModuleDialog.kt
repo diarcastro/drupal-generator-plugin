@@ -20,6 +20,7 @@ class CreateModuleDialog : DialogWrapper(true) {
     private var mainPanel: JPanel = JPanel()
     private var name: JTextField = JTextField("my_module", 20)
     private var description: JTextField = JTextField("My module description", 30)
+    private var packageName: JTextField = JTextField("Custom", 20)
     private lateinit var tree: CheckboxTree
 
     init {
@@ -51,6 +52,7 @@ class CreateModuleDialog : DialogWrapper(true) {
     override fun createCenterPanel(): JComponent {
         mainPanel.layout = BoxLayout(mainPanel, BoxLayout.Y_AXIS)
         val nameLabel = JLabel("Module name:")
+        val packageLabel = JLabel("Package:")
         val descriptionLabel = JLabel("Module description:")
 
         val panels = mutableListOf<JPanel>()
@@ -61,12 +63,19 @@ class CreateModuleDialog : DialogWrapper(true) {
             name,
         )
 
+        val panelModulePackage = createSection(
+            "",
+            packageLabel,
+            packageName,
+        )
+
         val panelModuleDescription = createSection(
             "",
             descriptionLabel,
             description,
         )
         panels.add(panelModule)
+        panels.add(panelModulePackage)
         panels.add(panelModuleDescription)
 
         /* File tree */
@@ -153,6 +162,7 @@ class CreateModuleDialog : DialogWrapper(true) {
         val data = ModuleData()
         data.name = name.text
         data.description = description.text
+        data.packageName = packageName.text
         data.filesToGenerate = getCheckedItems(tree)
 
         return data
