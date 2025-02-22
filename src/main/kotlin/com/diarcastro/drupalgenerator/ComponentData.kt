@@ -1,6 +1,6 @@
 package com.diarcastro.drupalgenerator
 
-const val TEMPLATE_COMPONENT_PATH = "templates/component";
+const val TEMPLATE_COMPONENT_PATH = "templates/component"
 val componentFiles = mapOf(
     "yml" to "$TEMPLATE_COMPONENT_PATH/component.component.yml",
     "scss" to "$TEMPLATE_COMPONENT_PATH/src/component.scss",

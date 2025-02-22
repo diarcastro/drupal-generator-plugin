@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * @file
+ * Installation functions for the {{title}} module.
+ */
+
+use Drupal\user\RoleInterface;
+
+/**
+ * Implements hook_install().
+ */
+function {{titleSnakeCase}}_install() {
+}

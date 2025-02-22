@@ -9,7 +9,7 @@ fun readResourceFile(fileName: String): String? {
 
 fun getTemplateFile(templatePath: String, data: Map<String, String>): ByteArray {
     val templateContent = readResourceFile(templatePath)
-    if (templateContent == null) {
+    if (templateContent === null) {
         return "".toByteArray()
     }
 

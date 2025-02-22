@@ -1,0 +1,4 @@
+services:
+  {{titleSnakeCase}}.{{titleSnakeCase}}_service:
+    class: \Drupal\{{titleSnakeCase}}\Service\{{titlePascalCase}}Service
+    arguments: []

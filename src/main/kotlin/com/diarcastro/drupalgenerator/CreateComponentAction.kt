@@ -55,7 +55,7 @@ class CreateComponentAction : AnAction() {
                                 null
                             }
 
-                            val distFolder = subFolder ?: sdcFolder;
+                            val distFolder = subFolder ?: sdcFolder
                             val file = distFolder.createChildData(this, filenameToGenerate)
                             file.setBinaryContent(fileContent)
                         }
