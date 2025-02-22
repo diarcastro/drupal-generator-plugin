@@ -3,7 +3,6 @@ package com.diarcastro.drupalgenerator
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.ui.CheckboxTree
-import com.intellij.ui.CheckedTreeNode
 import com.intellij.ui.components.JBScrollPane
 import java.awt.BorderLayout
 import java.awt.FlowLayout
@@ -168,8 +167,4 @@ class CreateFileDialog : DialogWrapper(true) {
 
         return checkedNodes
     }
-}
-
-class TreeNodeWithID(var label: String, val id: String) : CheckedTreeNode(label)  {
-    override fun toString(): String = label
 }
