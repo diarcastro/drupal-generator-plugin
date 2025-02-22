@@ -1,17 +1,27 @@
 package com.diarcastro.drupalgenerator
 
+const val TEMPLATE_COMPONENT_PATH = "templates/component";
+val componentFiles = mapOf(
+    "yml" to "$TEMPLATE_COMPONENT_PATH/component.component.yml",
+    "scss" to "$TEMPLATE_COMPONENT_PATH/src/component.scss",
+    "twig" to "$TEMPLATE_COMPONENT_PATH/component.twig",
+    "css" to "$TEMPLATE_COMPONENT_PATH/component.css",
+    "js" to "$TEMPLATE_COMPONENT_PATH/component.js",
+    "stories" to "$TEMPLATE_COMPONENT_PATH/component.stories.twig"
+)
+
 class ComponentData {
     var name = ""
+    var resource = ""
     var status = "stable"
-    var schema = "\$schema: https://git.drupalcode.org/project/drupal/-/raw/10.3.x/core/assets/schemas/v1/metadata.schema.json"
-    var filesToGenerated = ComponentDataFiles()
+    var filesToGenerated = listOf<String>()
 
     fun toTitle(): String {
         return toTitleCase(this.name)
     }
 
     fun fileName(): String {
-        return toKebebCase(this.name)
+        return toKebabCase(this.name)
     }
 
     fun variableName(): String {
@@ -21,13 +31,14 @@ class ComponentData {
     fun isValid(): Boolean {
         return this.name.isNotBlank()
     }
-}
 
-class ComponentDataFiles {
-    var yml = true
-    var scss = true
-    var css = true
-    var js = true
-    var story = true
-    var twig = true
+    fun getDataObject(): Map<String, String> {
+        return mapOf(
+            "title" to this.toTitle(),
+            "status" to this.status,
+            "titleKebabCase" to this.fileName(),
+            "titleCamelCase" to this.variableName(),
+            "resource" to this.resource,
+        )
+    }
 }

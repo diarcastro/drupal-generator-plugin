@@ -1,0 +1,10 @@
+{# {{title} Component #}
+
+{% set classes = [
+  "{{titleKebabCase}}",
+] %}
+
+<article {{ attributes.addClass(classes) }}>
+  <h2>{{ title }}</h2>
+  {# {{ body }} #}
+</article>

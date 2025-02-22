@@ -1,0 +1,30 @@
+{#
+# Storybook stories for {{title}}
+# More documentation on https://www.drupal.org/project/storybook
+#}
+
+{% stories {{titleCamelCase}} with {
+  title: "{{title}}",
+  args: {},
+} %}
+
+  {% story default with {
+    name: "Default",
+    args: {
+        text: "Hello, World!",
+    },
+    params: {},
+  } %}
+
+    {{ include("{{resource}}:{{titleKebabCase}}", { text }) }}
+    {# Example using embed
+      {% embed("{{resource}}:{{titleKebabCase}}" with { text }) %}
+        {% block body %}
+          <p>Hello Text</p>
+        {% endblock %}
+      {% endembed %}
+    #}
+
+  {% endstory %}
+
+{% endstories %}

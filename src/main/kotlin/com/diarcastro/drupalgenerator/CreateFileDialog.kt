@@ -82,7 +82,7 @@ class CreateFileDialog : DialogWrapper(true) {
         val nodeComponent = TreeNodeWithID("my-sdc.component.yml", "yml")
         val nodeCss = TreeNodeWithID("my-sdc.css", "css")
         val nodeJs = TreeNodeWithID("my-sdc.js", "js")
-        val nodeStories = TreeNodeWithID("my-sdc.stories.twig", "story")
+        val nodeStories = TreeNodeWithID("my-sdc.stories.twig", "stories")
         val nodeTwig = TreeNodeWithID("my-sdc.twig", "twig")
         rootNode.add(srcFolder)
         rootNode.add(nodeComponent)
@@ -115,7 +115,7 @@ class CreateFileDialog : DialogWrapper(true) {
                 if (sdcName.text.isEmpty()) {
                     return
                 }
-                val componentName = toKebebCase(sdcName.text)
+                val componentName = toKebabCase(sdcName.text)
                 rootNode.userObject = componentName
                 nodeSass.userObject = "$componentName.scss"
                 nodeComponent.userObject = "$componentName.component.yml"
@@ -145,13 +145,7 @@ class CreateFileDialog : DialogWrapper(true) {
         val componentData = ComponentData()
         componentData.name = sdcName.text
         componentData.status = statusDropdown.selectedItem as String
-        val checkedItems = getCheckedItems(tree)
-        componentData.filesToGenerated.yml = checkedItems.contains("yml")
-        componentData.filesToGenerated.scss = checkedItems.contains("scss")
-        componentData.filesToGenerated.css = checkedItems.contains("css")
-        componentData.filesToGenerated.story = checkedItems.contains("story")
-        componentData.filesToGenerated.js = checkedItems.contains("js")
-        componentData.filesToGenerated.twig = checkedItems.contains("twig")
+        componentData.filesToGenerated = getCheckedItems(tree)
 
         return componentData
     }

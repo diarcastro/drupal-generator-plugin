@@ -35,36 +35,30 @@ class CreateComponentAction : AnAction() {
             // Perform file creation inside a write-action
             WriteCommandAction.runWriteCommandAction(project) {
                 try {
+                    componentData.resource = folder.parent.name
                     val sdcFolder = folder.createChildDirectory(this, fileName)
-                    if (componentData.filesToGenerated.scss) {
-                        val srcFolder = sdcFolder.createChildDirectory(this, "src")
-                        val componentScssFile = srcFolder.createChildData(this, "$fileName.scss")
-                        componentScssFile.setBinaryContent(templateScss(componentData))
-                    }
+                    val componentFilesNames = mapOf(
+                        "yml" to "$fileName.component.yml",
+                        "scss" to "$fileName.scss",
+                        "twig" to "$fileName.twig",
+                        "css" to "$fileName.css",
+                        "js" to "$fileName.js",
+                        "stories" to "$fileName.stories.twig"
+                    )
+                    componentFiles.forEach{ (key, templateFilePath) ->
+                        val filenameToGenerate = componentFilesNames[key] ?: ""
+                        if (componentData.filesToGenerated.contains(key)) {
+                            val fileContent = getTemplateFile(templateFilePath, componentData.getDataObject())
+                            val subFolder = if (key === "scss") {
+                                sdcFolder.createChildDirectory(this, "src")
+                            } else {
+                                null
+                            }
 
-                    if (componentData.filesToGenerated.twig) {
-                        val componentTwigFile = sdcFolder.createChildData(this, "$fileName.twig")
-                        componentTwigFile.setBinaryContent(templateTwig(componentData))
-                    }
-
-                    if (componentData.filesToGenerated.yml) {
-                        val componentFile = sdcFolder.createChildData(this, "$fileName.component.yml")
-                        componentFile.setBinaryContent(templateComponent(componentData))
-                    }
-
-                    if (componentData.filesToGenerated.css) {
-                        val componentCssFile = sdcFolder.createChildData(this, "$fileName.css")
-                        componentCssFile.setBinaryContent(templateScss(componentData))
-                    }
-
-                    if (componentData.filesToGenerated.story) {
-                        val componentStoriesFile = sdcFolder.createChildData(this, "$fileName.stories.twig")
-                        componentStoriesFile.setBinaryContent(templateStories(componentData, folder.parent.name))
-                    }
-
-                    if (componentData.filesToGenerated.js) {
-                        val componentJsFile = sdcFolder.createChildData(this, "$fileName.js")
-                        componentJsFile.setBinaryContent(templateJs(componentData))
+                            val distFolder = subFolder ?: sdcFolder;
+                            val file = distFolder.createChildData(this, filenameToGenerate)
+                            file.setBinaryContent(fileContent)
+                        }
                     }
                 } catch (ex: Exception) {
                     Messages.showErrorDialog(project, "Failed to create file: ${ex.message}", "Error")
