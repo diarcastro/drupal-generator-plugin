@@ -56,6 +56,14 @@ class CreateModuleAction : AnAction() {
                             file.setBinaryContent(fileContent)
                         }
                     }
+
+                    val message =
+                        """Module <b>${moduleData.toTitle()}</b><i>($fileName)</i> was created successfully! 🎉
+                    <br>
+                    Run: <strong><code>drush en $fileName</code></strong>
+                    to enable it! 🚀
+                    """
+                    showToastMessage(project, message)
                 } catch (ex: Exception) {
                     Messages.showErrorDialog(project, "Failed to create file: ${ex.message}", "Error")
                 }

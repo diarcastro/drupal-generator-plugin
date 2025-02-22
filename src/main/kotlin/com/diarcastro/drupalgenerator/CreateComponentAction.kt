@@ -45,7 +45,7 @@ class CreateComponentAction : AnAction() {
                         "js" to "$fileName.js",
                         "stories" to "$fileName.stories.twig"
                     )
-                    componentFiles.forEach{ (key, templateFilePath) ->
+                    componentFiles.forEach { (key, templateFilePath) ->
                         val filenameToGenerate = componentFilesNames[key] ?: ""
                         if (componentData.filesToGenerated.contains(key)) {
                             val fileContent = getTemplateFile(templateFilePath, componentData.getDataObject())
@@ -60,6 +60,10 @@ class CreateComponentAction : AnAction() {
                             file.setBinaryContent(fileContent)
                         }
                     }
+
+                    val message =
+                        "Component <b>${componentData.toTitle()}</b><i>($fileName)</i> was created successfully! 🎉"
+                    showToastMessage(project, message)
                 } catch (ex: Exception) {
                     Messages.showErrorDialog(project, "Failed to create file: ${ex.message}", "Error")
                 }

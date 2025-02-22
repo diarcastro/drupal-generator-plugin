@@ -1,5 +1,9 @@
 package com.diarcastro.drupalgenerator
 
+import com.intellij.notification.NotificationGroupManager
+import com.intellij.notification.NotificationType
+import com.intellij.openapi.project.Project
+
 /**
  * Convert a string to kebab-case.
  */
@@ -42,4 +46,16 @@ fun toPascalCase(text: String): String {
             word.lowercase().replaceFirstChar { it.uppercase() }
         }
         .joinToString("")
+}
+
+fun showToastMessage(project: Project, message: String) {
+    val notificationGroup = NotificationGroupManager.getInstance()
+        .getNotificationGroup("drupalgenerator") // Must match `plugin.xml`
+
+    val notification = notificationGroup.createNotification(
+        message,
+        NotificationType.INFORMATION
+    )
+
+    notification.notify(project)
 }

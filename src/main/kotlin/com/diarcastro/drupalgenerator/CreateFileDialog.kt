@@ -54,7 +54,7 @@ class CreateFileDialog : DialogWrapper(true) {
     override fun createCenterPanel(): JComponent {
         mainPanel.layout = BoxLayout(mainPanel, BoxLayout.Y_AXIS)
         val labelDimension = Dimension(75, 30)
-        val sdcLabel: JLabel = JLabel("SDC Name:")
+        val sdcLabel = JLabel("SDC Name:")
         sdcLabel.preferredSize = labelDimension
 
         val panels = mutableListOf<JPanel>()
