@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.diarcastro"
-version = "1.1"
+version = "1.2"
 
 repositories {
     mavenCentral()
@@ -32,7 +32,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("241")
-        untilBuild.set("243.*")
+        untilBuild.set("251.*")
     }
 
     signPlugin {
